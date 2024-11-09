@@ -1,7 +1,11 @@
-/* Global Variables */
-
 // Personal API Key for OpenWeatherMap API
-const apiKey = 'appid=dcb343a416106633908dd8e70c52a5ca&units=imperial';
+const apiKey = 'dcb343a416106633908dd8e70c52a5ca&units=imperial';
+
+/* Global Variables */
+const weatherBaseUrl = 'https://api.openweathermap.org/data/2.5/weather?';
+
+const generateButton = document.getElementById('generate');
+const zipInput = document.getElementById('zip');
 
 // Create a new date instance dynamically with JS
 let d = new Date();
@@ -21,8 +25,7 @@ async function getData(url) {
 
 //Fetch weather data
 async function getWeather(url) {
-    
-    const res = await fetch(url+apiKey);
+    const res = await fetch(url);
     try {
         const data = await res.json();
         console.log(data);
@@ -31,8 +34,13 @@ async function getWeather(url) {
         console.log("error", error);
     }
 }
-const weatherBaseUrl = 'https://api.openweathermap.org/data/2.5/weather?';
-const zip = 'zip=11765&';
 
-// getWeather(weatherBaseUrl+zip);
-getData('/all');
+generateButton.addEventListener('click', function () {
+    
+    const zipcode = zipInput.value;
+    const url = `${weatherBaseUrl}&zip=${zipcode}&appid=${apiKey}`;
+    getWeather(url);
+
+});
+
+// getData('/all');
