@@ -4,9 +4,13 @@ const apiKey = 'dcb343a416106633908dd8e70c52a5ca&units=imperial';
 /* Global Variables */
 const weatherBaseUrl = 'https://api.openweathermap.org/data/2.5/weather?';
 
-const generateButton = document.getElementById('generate');
 const zipInput = document.getElementById('zip');
 const userResponseTextarea = document.getElementById('feelings');
+const generateButton = document.getElementById('generate');
+
+const dateDiv = document.getElementById('date');
+const tempDiv = document.getElementById('temp');
+const contentDiv = document.getElementById('content');
 
 // Create a new date instance dynamically with JS
 let d = new Date();
@@ -17,8 +21,9 @@ async function getData(url) {
     const res = await fetch(url);
     try {
         const data = await res.json();
-        console.log(data);
-        return data;
+        dateDiv.textContent = data.date;
+        tempDiv.textContent = data.temprature;
+        contentDiv.textContent = data.userResponse;
     } catch (error) {
         console.log("error", error);
     }
@@ -67,8 +72,9 @@ generateButton.addEventListener('click', function () {
                 date: newDate,
                 userResponse: userResponseTextarea.value
             })
+        })
+        .then(function () {
+            getData('/all')
         });
 
 });
-
-// getData('/all');
