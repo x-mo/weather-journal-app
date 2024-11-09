@@ -6,6 +6,7 @@ const weatherBaseUrl = 'https://api.openweathermap.org/data/2.5/weather?';
 
 const generateButton = document.getElementById('generate');
 const zipInput = document.getElementById('zip');
+const userResponseTextarea = document.getElementById('feelings');
 
 // Create a new date instance dynamically with JS
 let d = new Date();
@@ -14,6 +15,25 @@ let newDate = d.getMonth() + '.' + d.getDate() + '.' + d.getFullYear();
 //Fetch project data
 async function getData(url) {
     const res = await fetch(url);
+    try {
+        const data = await res.json();
+        console.log(data);
+        return data;
+    } catch (error) {
+        console.log("error", error);
+    }
+}
+
+//Post project data
+async function postData(url, data) {
+    const res = await fetch(url, {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    });
     try {
         const data = await res.json();
         console.log(data);
@@ -36,10 +56,18 @@ async function getWeather(url) {
 }
 
 generateButton.addEventListener('click', function () {
-    
+
     const zipcode = zipInput.value;
     const url = `${weatherBaseUrl}&zip=${zipcode}&appid=${apiKey}`;
-    getWeather(url);
+
+    getWeather(url)
+        .then(function (data) {
+            postData('/add', {
+                temprature: data.main.temp,
+                date: newDate,
+                userResponse: userResponseTextarea.value
+            })
+        });
 
 });
 
