@@ -22,7 +22,7 @@ async function getData(url) {
     try {
         const data = await res.json();
         dateDiv.textContent = data.date;
-        tempDiv.textContent = data.temprature;
+        tempDiv.textContent = Math.round(data.temprature)+ ' degrees';
         contentDiv.textContent = data.userResponse;
     } catch (error) {
         console.log("error", error);
