@@ -16,7 +16,7 @@ const contentDiv = document.getElementById('content');
 let d = new Date();
 let newDate = d.getMonth() + '.' + d.getDate() + '.' + d.getFullYear();
 
-//Fetch project data
+//Fetch project data & Update UI
 async function getData(url) {
     const res = await fetch(url);
     try {
