@@ -1,4 +1,6 @@
 /* Global Variables */
+// Personal API Key for OpenWeatherMap API
+const apiKey = 'dcb343a416106633908dd8e70c52a5ca&units=imperial';
 
 // Create a new date instance dynamically with JS
 let d = new Date();
